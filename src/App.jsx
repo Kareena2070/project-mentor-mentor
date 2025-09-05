@@ -1,33 +1,36 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link } from 'react-router'
+import Home from './pages/home'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isOpen, setIsOpen] = useState(false)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <nav className='navbar'>
+        <div className='nav-head'>
+          <h1>NavGurukul</h1>
+          <p>Progress Tracker</p>
+        </div>
+
+        {/* Hamburger button */}
+        <div className="hamburger" onClick={() => setIsOpen(!isOpen)}>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <ul className={`nav-link ${isOpen ? 'open' : ''}`}>
+          <li><Link to="/" onClick={() => setIsOpen(false)}>Home</Link></li>
+          <li><Link to="/addTask" onClick={() => setIsOpen(false)}>Add Task</Link></li>
+          <li><Link to="/progress" onClick={() => setIsOpen(false)}>Progress</Link></li>
+          <li><Link to="/login" onClick={() => setIsOpen(false)}>Login</Link></li>
+        </ul>
+      </nav>
+
+      <Routes>
+        <Route path='/' element={<Home/>}/>
+      </Routes>
     </>
   )
 }
