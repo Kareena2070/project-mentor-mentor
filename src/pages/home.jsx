@@ -1,6 +1,5 @@
-import { title } from "process";
 
-function Home(){
+function Home() {
     const explinList = [
         {
             title: "Daily Reflection",
@@ -14,22 +13,28 @@ function Home(){
             title: "Visual Growth",
             description: "See your progress with charts, levels, and streaks that make learning motivating."
         }
-    ]
-    return(
+    ];
+
+    return (
         <>
-        <div>
-            <h1>Welcome to NavGurukul</h1>
-            <p>Mentor–Mentee Progress Tracker</p>
-            <p>Track your learning journey, measure growth, and celebrate progress together. Built for pair programming excellence at NavGurukul.</p>
-            <button> 📝Add Today's Learning</button>
-            <button> 📊View Progress</button>
-        </div>
-        <div>
-            {explinList.map()}
-           
-        </div>
+            <div className="header">
+                <h1>Welcome to NavGurukul</h1>
+                <p>Mentor-Mentee Progress Tracker</p>
+                <p>Track your learning journey, measure growth, and celebrate progress together. Built for pair programming excellence at NavGurukul.</p>
+                <button> 📝Add Today's Learning</button>
+                <button> 📊View Progress</button>
+            </div>
+            
+            <div className="cards-container">
+                {explinList.map((explain, id) => (
+                    <div key={id} className="card">
+                        <h2>{explain.title}</h2>
+                        <p>{explain.description}</p>
+                    </div>
+                ))}
+            </div>
         </>
     );
 }
 
-export default Home
+export default Home;
