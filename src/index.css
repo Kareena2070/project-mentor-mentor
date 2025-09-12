@@ -14,8 +14,9 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.8rem 15rem;
-  background: linear-gradient(90deg, #6a82fb, #a777e3);
+  padding: 1rem 15rem;
+  background: linear-gradient(80deg, #6a82fb, #744ca5);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   color: white;
   position: relative;
 }
@@ -28,7 +29,7 @@ body {
 }
 
 .nav-head h1 {
-  font-size: 1.2rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
