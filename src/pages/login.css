@@ -1,0 +1,154 @@
+/* =============================
+   LOGIN PAGE STYLING
+   Theme aligned with Home page
+============================= */
+
+.login-page {
+  background-color: #f7f8fa;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.login-container {
+  background-color: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 28px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.login-container h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: #222;
+}
+
+.toggle-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.toggle-buttons button {
+  padding: 10px 22px;
+  border-radius: 6px;
+  border: 1px solid #0078d4;
+  background-color: white;
+  color: #0078d4;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.toggle-buttons button[aria-pressed="true"],
+.toggle-buttons button:hover {
+  background-color: #0078d4;
+  color: white;
+}
+
+form label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+form input,
+form select {
+  width: 100%;
+  padding: 10px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+form input:focus,
+form select:focus {
+  border-color: #0078d4;
+}
+
+.error {
+  color: red;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.action-buttons button {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.action-buttons button[type="submit"] {
+  background-color: #0078d4;
+  color: white;
+}
+
+.action-buttons button[type="submit"]:hover {
+  background-color: #005fa3;
+}
+
+.action-buttons button[type="button"] {
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.action-buttons button[type="button"]:hover {
+  background-color: #e0e0e0;
+}
+
+.forgot-password {
+  background: none;
+  border: none;
+  color: #0078d4;
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+}
+
+.forgot-password:hover {
+  color: #005fa3;
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 600px) {
+  .login-container {
+    padding: 24px 20px;
+  }
+
+  .toggle-buttons button {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
+}
