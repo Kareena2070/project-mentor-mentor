@@ -10,6 +10,8 @@ export default function LoginPage() {
   const [registerData, setRegisterData] = useState({
     name: "",
     role: "mentee",
+    menteeCount: "",
+    menteeEmails: [],
     password: "",
     confirmPassword: "",
   });
@@ -30,6 +32,23 @@ export default function LoginPage() {
     const e = {};
     if (!registerData.name) e.name = "Name is required";
     if (!registerData.role) e.role = "Role is required";
+    if (registerData.role === 'mentor'){
+      if (!registerData.menteeCount) e.menteeCount = "Please enter how many mentees you have";
+      else if (isNaN(Number(registerData.menteeCount)) || Number(registerData.menteeCount) < 0) e.menteeCount = "Enter a valid number";
+      else if (Number(registerData.menteeCount) > 5) e.menteeCount = "Limit exceeded (max 5)";
+      const expected = Number(registerData.menteeCount) || 0
+      if (expected === 0) {
+        // zero mentees is allowed but no emails required
+      } else {
+        if (!Array.isArray(registerData.menteeEmails) || registerData.menteeEmails.length !== expected || registerData.menteeEmails.length > 5) {
+          e.menteeEmails = `Please provide ${expected} mentee email address(es)`;
+        } else {
+          // validate each email
+          const invalidIndex = registerData.menteeEmails.findIndex(em => !emailRegex.test(String(em).trim()))
+          if (invalidIndex !== -1) e.menteeEmails = `Mentee email at position ${invalidIndex + 1} is invalid`;
+        }
+      }
+    }
     if (!registerData.password) e.password = "Password is required";
     else if (registerData.password.length < 6)
       e.password = "Password must be at least 6 characters";
@@ -55,9 +74,9 @@ export default function LoginPage() {
   const handleRegisterSubmit = (ev) => {
     ev.preventDefault();
     if (!validateRegister()) return;
-    // Simulate successful registration and auto-login
-    localStorage.setItem('auth', 'true')
-    setRegisterData({ name: "", role: "mentee", password: "", confirmPassword: "" });
+  // Simulate successful registration and auto-login
+  localStorage.setItem('auth', 'true')
+  setRegisterData({ name: "", role: "mentee", menteeCount: "", menteeEmails: [], password: "", confirmPassword: "" });
     const from = location.state?.from?.pathname || '/'
     navigate(from, { replace: true })
   };
@@ -158,6 +177,58 @@ export default function LoginPage() {
               </select>
               {errors.role && <div className="error">{errors.role}</div>}
             </div>
+
+            {registerData.role === 'mentor' && (
+              <>
+                <div className="form-group">
+                  <label htmlFor="mentee-count">How many mentee(s) do you have?</label>
+                  <input
+                    id="mentee-count"
+                    type="number"
+                    value={registerData.menteeCount}
+                    onChange={(e) => {
+                      const val = e.target.value
+                      if (val === '') {
+                        setRegisterData({ ...registerData, menteeCount: '', menteeEmails: [] });
+                        setErrors((prev) => ({ ...prev, menteeCount: undefined }));
+                        return;
+                      }
+                      let num = Math.max(0, Number(val));
+                      const MAX = 5;
+                      if (num > MAX) {
+                        // set a visible error and cap the count and inputs to MAX
+                        setErrors((prev) => ({ ...prev, menteeCount: 'Limit exceeded (max 5)' }));
+                        num = MAX;
+                      } else {
+                        // clear any previous menteeCount error
+                        setErrors((prev) => ({ ...prev, menteeCount: undefined }));
+                      }
+                      const current = Array.isArray(registerData.menteeEmails) ? registerData.menteeEmails.slice() : [];
+                      while (current.length < num) current.push('');
+                      while (current.length > num) current.pop();
+                      setRegisterData({ ...registerData, menteeCount: String(num), menteeEmails: current });
+                    }}
+                  />
+                  {errors.menteeCount && <div className="error">{errors.menteeCount}</div>}
+                </div>
+                {Array.isArray(registerData.menteeEmails) && registerData.menteeEmails.map((m, idx) => (
+                  <div className="form-group" key={idx}>
+                    <label htmlFor={`mentee-email-${idx}`}>Mentee email #{idx + 1}</label>
+                    <input
+                      id={`mentee-email-${idx}`}
+                      type="email"
+                      value={m}
+                      onChange={(e) => {
+                        const newArr = (registerData.menteeEmails || []).slice()
+                        newArr[idx] = e.target.value
+                        setRegisterData({ ...registerData, menteeEmails: newArr })
+                      }}
+                    />
+                  </div>
+                ))}
+                {errors.menteeEmails && <div className="error">{errors.menteeEmails}</div>}
+              </>
+            )}
 
             <div className="form-group">
               <label htmlFor="reg-password">Create password</label>
