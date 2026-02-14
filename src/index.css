@@ -9,12 +9,19 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* Prevent accidental horizontal scrolling from wide paddings/elements */
+html, body {
+  overflow-x: hidden;
+}
+
 /* Navbar */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 15rem;
+  /* use a responsive horizontal padding so very-wide fixed padding doesn't cause overflow */
+  padding: 1rem;
+  padding-inline: clamp(1rem, 10vw, 15rem);
   background: linear-gradient(80deg, #6a82fb, #744ca5);
   box-shadow: 0 4px 6px rgba(0,0,0,0.05);
   color: white;

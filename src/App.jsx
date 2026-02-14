@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import { Routes, Route, Link } from 'react-router'
+import { Routes, Route, Link } from 'react-router-dom'
 import Home from './pages/home'
-import Login from './pages/login'
+import Login from './auth/login'
+import Register from './auth/register'
 
 function App() {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,9 +31,9 @@ function App() {
       </nav>
 
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>} />
-        
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/register' element={<Register />} />
       </Routes>
     </>
   )
