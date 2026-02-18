@@ -64,6 +64,37 @@
   box-shadow: 0 0 5px rgba(74, 144, 226, 0.4);
 }
 
+/* Mentee */
+.input-label {
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #333;
+}
+
+/* Custom Select Styling */
+.custom-select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* Focus Effect */
+.custom-select:focus {
+  border-color: #4f46e5;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+/* Hover Effect */
+.custom-select:hover {
+  border-color: #4f46e5;
+}
+
 /* Button */
 .register-button {
   margin-top: 10px;
@@ -80,3 +111,4 @@
 .register-button:hover {
   background-color: #357abd;
 }
+

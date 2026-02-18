@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 import "./register.css";
@@ -8,13 +8,32 @@ function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("mentee");
+  const [menteeEmail, setMenteeEmail] = useState("");
+  const [expertise, setExpertise] = useState("");
 
   const navigate = useNavigate();
 
   const submitButton = (e) => {
     e.preventDefault();
-    const res = register(name, email, password);
-    if (res) navigate('/login');
+    let expertiseArray = [];
+
+    if (role === "mentor") {
+      expertiseArray = expertise
+        .split(",")
+        .map((item) => item.trim())
+        .filter((item) => item !== "");
+    }
+
+    const res = register(
+      name,
+      email,
+      password,
+      role,
+      role === "mentor" ? menteeEmail : null,
+      role === "mentor" ? expertiseArray : [],
+    );
+    if (res) navigate("/login");
   };
 
   return (
@@ -36,6 +55,44 @@ function Register() {
               required
             />
           </div>
+          <div className="input-group">
+            <label className="input-label">Role</label>
+            <select
+              className="custom-select"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="mentee">Mentee</option>
+              <option value="mentor">Mentor</option>
+            </select>
+          </div>
+
+          {/* Mentor Extra Fields */}
+          {role === "mentor" && (
+            <>
+              <div className="input-group">
+                <label>Mentee Email</label>
+                <input
+                  type="email"
+                  placeholder="Enter your mentee email"
+                  value={menteeEmail}
+                  onChange={(e) => setMenteeEmail(e.target.value)}
+                  required
+                />
+              </div>
+
+              <div className="input-group">
+                <label>Expertise (comma separated)</label>
+                <input
+                  type="text"
+                  placeholder="e.g React, Node, MongoDB"
+                  value={expertise}
+                  onChange={(e) => setExpertise(e.target.value)}
+                  required
+                />
+              </div>
+            </>
+          )}
 
           <div className="input-group">
             <label>Email</label>
@@ -63,7 +120,9 @@ function Register() {
             Register
           </button>
 
-          <p>Already have account? <Link to="/login">Login</Link></p>
+          <p>
+            Already have account? <Link to="/login">Login</Link>
+          </p>
         </form>
       </div>
     </div>
